@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using FruktAdminApp.Models.FruitWebService.ReturnModels;
+using System;
+using System.Net.Http;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Newtonsoft.Json.Linq;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,11 +23,33 @@ namespace FruktAdminApp
         {
             this.Frame.Navigate(typeof(MainPage), null);
         }
-        private void FindItem(object sender, RoutedEventArgs e)
+        private async void FindItem(object sender, RoutedEventArgs e)
         {
-            //string tmp = inputName.Text;
+            string baseUrl = "http://localhost:8081";
+            string parameterUrl = "/Fruits/";
+            string itemId = inputName.Text;
+            int convertId = 0;
+            int.TryParse(itemId, out convertId);
+            if (convertId == 0)
+            {
+                throw new Exception("can not be alphabetical or 0");
+            }
 
-             // something something api request
+            using (HttpClient client = new HttpClient())
+            using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + itemId))
+            using (HttpContent content = response.Content)
+            {
+                // ... Read the string.
+                string result = await content.ReadAsStringAsync();
+
+                // ... Display the result.
+                if (result != null )
+                {
+                    JObject jobject = new JObject();
+                    FruitModel fruit = new FruitModel();
+                }
+            }
+            // something something api request
 
             // new page or something?
         }
