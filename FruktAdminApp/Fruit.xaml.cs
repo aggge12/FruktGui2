@@ -3,6 +3,7 @@ using System;
 using System.Net.Http;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -45,8 +46,9 @@ namespace FruktAdminApp
                 // ... Display the result.
                 if (result != null )
                 {
-                    JObject jobject = new JObject();
-                    FruitModel fruit = new FruitModel();
+                    FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
+                    var parameters = new FruitFormTemplate(fruit);
+                    this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
                 }
             }
             // something something api request

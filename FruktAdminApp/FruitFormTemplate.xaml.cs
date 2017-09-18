@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FruktAdminApp.Models.FruitWebService.ReturnModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,8 +23,15 @@ namespace FruktAdminApp
     /// </summary>
     public sealed partial class FruitFormTemplate : Page
     {
-        public FruitFormTemplate()
+        FruitModel fruit;
+        public FruitFormTemplate() // create new
         {
+            this.InitializeComponent();
+        }
+        public FruitFormTemplate(FruitModel fruit) // modify existing
+        {
+            this.fruit = fruit;
+            this.DataContext = this.fruit;
             this.InitializeComponent();
         }
     }
