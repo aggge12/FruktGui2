@@ -47,7 +47,7 @@ namespace FruktAdminApp
                 if (result != null )
                 {
                     FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
-                    var parameters = new FruitFormTemplate(fruit);
+                    var parameters = fruit;
                     this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
                 }
             }

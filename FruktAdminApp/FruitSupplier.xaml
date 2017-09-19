@@ -1,12 +1,13 @@
 ﻿<Page
-    x:Class="FruktAdminApp.Suppliers"
+    x:Class="FruktAdminApp.FruitSupplier"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:FruktAdminApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="fruit">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0.5*"/>
@@ -18,24 +19,24 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*" />
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
 
 
         </Grid.ColumnDefinitions>
+        <TextBlock x:Name="DbId" Grid.Column="1" Grid.ColumnSpan="1" Margin="0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Id}"/>
+        <TextBox x:Name="fruitId" Grid.Column="1" Grid.ColumnSpan="2" Margin="0" Grid.Row="3" TextWrapping="Wrap" Text="{Binding Name}"/>
+        
+        <!-- list with suppliers here -->
+        
+        <TextBlock x:Name="responseMsg" Grid.Column="2" HorizontalAlignment="Left" Grid.ColumnSpan="1" Grid.Row="6" Grid.RowSpan="1" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Button Content="Save" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="saveChanges"/>
+
         <Button Grid.Column="0" Grid.Row="1" x:Name="Back_btn" Content="Back" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" BorderBrush="Black" Background="{x:Null}" Click="Back_click" RenderTransformOrigin="0.105,-0.125"/>
         <Button Grid.Column="0" Grid.Row="2" x:Name="Home_btn" Content="Home" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" BorderBrush="Black" Background="{x:Null}" Click="Back_click" RenderTransformOrigin="0.105,-0.125"/>
-        <Button x:Name="button" Content="Add New Supplier" Grid.Column="2" Grid.ColumnSpan="1"  Grid.Row="4" VerticalAlignment="Stretch" RenderTransformOrigin="1.108,-0.125" HorizontalAlignment="Stretch" Background="#33D4D4D4" BorderBrush="Black"/>
-        <Button x:Name="button_Copy" Content="Find Supplier By Id" Grid.Column="3"  Grid.Row="6" VerticalAlignment="Stretch" RenderTransformOrigin="1.108,-0.125" HorizontalAlignment="Stretch" Background="#33BDBDBD" BorderBrush="Black" Click="FindItem"/>
-        <TextBox x:Name="inputName" Grid.Column="2" Margin="0" Grid.Row="6" TextWrapping="Wrap"/>
-        <TextBlock x:Name="textBlock" Grid.Column="2" Margin="0" Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="Supplier Management Page" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-
-
+        <Button Grid.Column="1" Grid.Row="1" x:Name="a" Content="Manage supplers for this fruit" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" BorderBrush="Black"/>
     </Grid>
-
 </Page>

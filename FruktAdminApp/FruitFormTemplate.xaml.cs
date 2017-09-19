@@ -23,16 +23,37 @@ namespace FruktAdminApp
     /// </summary>
     public sealed partial class FruitFormTemplate : Page
     {
-        FruitModel fruit;
+        public FruitModel fruit { get; set; }
+
         public FruitFormTemplate() // create new
         {
             this.InitializeComponent();
+            DataContext = fruit;
         }
-        public FruitFormTemplate(FruitModel fruit) // modify existing
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.fruit = fruit;
-            this.DataContext = this.fruit;
-            this.InitializeComponent();
+            if (e.Parameter != null)
+            {
+                this.fruit = e.Parameter as FruitModel;
+                fruitId.Text = fruit.Id;
+                fruitName.Text = fruit.Name;
+                fruitqty.Text = fruit.QuantityInSupply;
+
+
+            }
+        }
+
+
+        public void saveChanges(object sender, RoutedEventArgs e)
+        {
+            // API update
+            responseMsg.Text = "response from Api";
+        }
+
+        public void Back_click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Fruit), null);
         }
     }
 }

@@ -101,6 +101,9 @@
     <Compile Include="FruitFormTemplate.xaml.cs">
       <DependentUpon>FruitFormTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FruitSupplier.xaml.cs">
+      <DependentUpon>FruitSupplier.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FruitFormTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FruitSupplier.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

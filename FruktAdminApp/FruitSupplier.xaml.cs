@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,23 +22,28 @@ namespace FruktAdminApp
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Suppliers : Page
+    public sealed partial class FruitSupplier : Page
     {
-        public Suppliers()
+        public string fruitID;
+        public string supplierID;
+        public FruitSupplier()
         {
             this.InitializeComponent();
         }
 
-        private void Back_click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage), null);
+            if (e.Parameter != null)
+            {
+                // receive fruit ID
+            }
         }
 
         private async void FindItem(object sender, RoutedEventArgs e)
         {
-            /*string baseUrl = "http://localhost:8081";
+            string baseUrl = "http://localhost:8081";
             string parameterUrl = "/Fruits/";
-            string itemId = inputName.Text;
+            string itemId = "5";
             int convertId = 0;
             int.TryParse(itemId, out convertId);
             if (convertId == 0)
@@ -55,14 +61,24 @@ namespace FruktAdminApp
                 // ... Display the result.
                 if (result != null)
                 {
-                    FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
-                    var parameters = new FruitFormTemplate(fruit);
-                    this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
+                   // FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
+                   // var parameters = fruit;
+                  //  this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
                 }
-            }*/
+            }
             // something something api request
 
             // new page or something?
+        }
+        public void saveChanges(object sender, RoutedEventArgs e)
+        {
+            // API update
+            responseMsg.Text = "response from Api";
+        }
+
+        public void Back_click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Fruit), null);
         }
     }
 }
