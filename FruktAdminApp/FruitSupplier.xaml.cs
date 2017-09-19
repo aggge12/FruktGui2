@@ -29,6 +29,12 @@ namespace FruktAdminApp
         public FruitSupplier()
         {
             this.InitializeComponent();
+            List<string> alist = new List<string>();
+            for (int i = 0; i<10; i++)
+            {
+                alist.Add("abc" + i + i);
+            }
+            listOfSuppliers.ItemsSource = alist;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

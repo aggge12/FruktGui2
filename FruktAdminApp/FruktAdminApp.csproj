@@ -108,6 +108,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\FruitModel.cs" />
+    <Compile Include="Models\FruitSupplierModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Suppliers.xaml.cs">
       <DependentUpon>Suppliers.xaml</DependentUpon>
