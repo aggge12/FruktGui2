@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FruktAdminApp.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,8 +37,8 @@ namespace FruktAdminApp
 
         private async void FindItem(object sender, RoutedEventArgs e)
         {
-            /*string baseUrl = "http://localhost:8081";
-            string parameterUrl = "/Fruits/";
+            string baseUrl = "http://localhost:8081";
+            string parameterUrl = "/Suppliers/";
             string itemId = inputName.Text;
             int convertId = 0;
             int.TryParse(itemId, out convertId);
@@ -55,11 +57,11 @@ namespace FruktAdminApp
                 // ... Display the result.
                 if (result != null)
                 {
-                    FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
-                    var parameters = new FruitFormTemplate(fruit);
-                    this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
+                    SupplierModel suppl = JsonConvert.DeserializeObject<SupplierModel>(result);
+                    var parameters = suppl;
+                    this.Frame.Navigate(typeof(SupplerFormTemplate), parameters);
                 }
-            }*/
+            }
             // something something api request
 
             // new page or something?

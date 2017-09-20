@@ -35,6 +35,6 @@
         <Button Grid.Column="0" Grid.Row="1" x:Name="Back_btn" Content="Back" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" BorderBrush="Black" Background="{x:Null}" Click="Back_click" RenderTransformOrigin="0.105,-0.125"/>
         <Button Grid.Column="0" Grid.Row="2" x:Name="Home_btn" Content="Home" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" BorderBrush="Black" Background="{x:Null}" Click="Back_click" RenderTransformOrigin="0.105,-0.125"/>
 
-        <Button Grid.Column="1" Grid.Row="1" x:Name="a" Content="Manage supplers for this fruit" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" BorderBrush="Black"/>
+        <Button Grid.Column="1" Grid.Row="1" x:Name="a" Content="Manage supplers for this fruit" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" Click="ManageSuppliers" BorderBrush="Black"/>
     </Grid>
 </Page>

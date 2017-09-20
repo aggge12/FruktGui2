@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using FruktAdminApp.Models.FruitWebService.ReturnModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +25,7 @@ namespace FruktAdminApp
     /// </summary>
     public sealed partial class FruitSupplier : Page
     {
+        public FruitModel fruit;
         public string fruitID;
         public string supplierID;
         public FruitSupplier()
@@ -41,15 +43,37 @@ namespace FruktAdminApp
         {
             if (e.Parameter != null)
             {
-                // receive fruit ID
+                this.fruit = e.Parameter as FruitModel;
             }
         }
 
-        private async void FindItem(object sender, RoutedEventArgs e)
+        private async void GetSuppliers(object sender, RoutedEventArgs e) // get all the suppliers
         {
             string baseUrl = "http://localhost:8081";
-            string parameterUrl = "/Fruits/";
-            string itemId = "5";
+            string parameterUrl = "/Suppliers";
+
+            using (HttpClient client = new HttpClient())
+            using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl))
+            using (HttpContent content = response.Content)
+            {
+                // ... Read the string.
+                string result = await content.ReadAsStringAsync();
+
+                // ... Display the result.
+                if (result != null)
+                {
+                   // FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
+                   // var parameters = fruit;
+                  //  this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
+                }
+            }
+        }
+
+        private async void getAddedSuppliers(object sender, RoutedEventArgs e) // get all the suppliers that are supplying this fruit
+        {
+            string baseUrl = "http://localhost:8081";
+            string parameterUrl = "/FruitSuppliers/";
+            string itemId = fruit.Id;
             int convertId = 0;
             int.TryParse(itemId, out convertId);
             if (convertId == 0)
@@ -67,15 +91,13 @@ namespace FruktAdminApp
                 // ... Display the result.
                 if (result != null)
                 {
-                   // FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
-                   // var parameters = fruit;
-                  //  this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
+                    // FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
+                    // var parameters = fruit;
+                    //  this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
                 }
             }
-            // something something api request
-
-            // new page or something?
         }
+
         public void saveChanges(object sender, RoutedEventArgs e)
         {
             // API update

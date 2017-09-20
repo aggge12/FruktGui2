@@ -109,7 +109,11 @@
     </Compile>
     <Compile Include="Models\FruitModel.cs" />
     <Compile Include="Models\FruitSupplierModel.cs" />
+    <Compile Include="Models\SupplierModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SupplerFormTemplate.xaml.cs">
+      <DependentUpon>SupplerFormTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Suppliers.xaml.cs">
       <DependentUpon>Suppliers.xaml</DependentUpon>
     </Compile>
@@ -150,6 +154,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SupplerFormTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Suppliers.xaml">
       <SubType>Designer</SubType>

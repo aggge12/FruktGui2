@@ -1,4 +1,4 @@
-﻿using FruktAdminApp.Models.FruitWebService.ReturnModels;
+﻿using FruktAdminApp.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,25 +21,22 @@ namespace FruktAdminApp
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class FruitFormTemplate : Page
+    public sealed partial class SupplerFormTemplate : Page
     {
-        public FruitModel fruit { get; set; }
+        SupplierModel Suppl { get; set; }
         Boolean newItem;
 
-        public FruitFormTemplate() // create new
+        public SupplerFormTemplate() // create new
         {
             this.InitializeComponent();
-            DataContext = fruit;
+            DataContext = Suppl;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter != null)
             {
-                this.fruit = e.Parameter as FruitModel;
-                fruitId.Text = fruit.Id;
-                fruitName.Text = fruit.Name;
-                fruitqty.Text = fruit.QuantityInSupply;
+                this.Suppl = e.Parameter as SupplierModel;
                 newItem = false;
 
             }
@@ -60,19 +57,13 @@ namespace FruktAdminApp
             {
                 //update
             }
-
-            // API update
+           
             responseMsg.Text = "response from Api";
         }
 
         public void Back_click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Fruit), null);
-        }
-        public void ManageSuppliers(object sender, RoutedEventArgs e)
-        {
-            var parameters = fruit;
-            this.Frame.Navigate(typeof(FruitSupplier), parameters);
+            this.Frame.Navigate(typeof(Suppliers), null);
         }
     }
 }
