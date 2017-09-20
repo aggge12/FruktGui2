@@ -27,7 +27,7 @@
 
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="DbId" Grid.Column="1" Grid.ColumnSpan="1" Margin="0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Id}"/>
-        <TextBox x:Name="fruitId" Grid.Column="1" Grid.ColumnSpan="2" Margin="0" Grid.Row="3" TextWrapping="Wrap" Text="{Binding Name}"/>
+        <TextBox x:Name="fruitId" Grid.Column="2" Grid.ColumnSpan="1" Margin="0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Name}"/>
         
         
         

@@ -12,5 +12,17 @@ namespace FruktAdminApp.Models
         {
 
         }
+
+        public SupplierModel(int id, string Name)
+        {
+            this.id = id;
+            this.Name = Name;
+        }
+
+
+        public int id { get; set; }
+
+
+        public string Name { get; set; }
     }
 }

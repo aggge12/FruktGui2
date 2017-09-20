@@ -43,12 +43,14 @@ namespace FruktAdminApp
                 fruitName.Text = fruit.Name;
                 fruitqty.Text = fruit.QuantityInSupply;
                 newItem = false;
+                ManageSuppliers_btn.IsEnabled = true;
 
             }
             else
             {
                 fruit = new FruitModel();
                 newItem = true;
+                ManageSuppliers_btn.IsEnabled = false;
             }
         }
 
@@ -72,6 +74,7 @@ namespace FruktAdminApp
                     fruit = JsonConvert.DeserializeObject<FruitModel>(json);
                     fruitId.Text = "ID : " + fruit.Id;
                     newItem = false;
+                    ManageSuppliers_btn.IsEnabled = true;
                 }
                 if (response.IsSuccessStatusCode)
                 {
