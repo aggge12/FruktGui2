@@ -1,8 +1,10 @@
 ﻿using FruktAdminApp.Models.FruitWebService.ReturnModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -37,7 +39,7 @@ namespace FruktAdminApp
             if (e.Parameter != null)
             {
                 this.fruit = e.Parameter as FruitModel;
-                fruitId.Text = fruit.Id;
+                fruitId.Text = "ID : " + fruit.Id;
                 fruitName.Text = fruit.Name;
                 fruitqty.Text = fruit.QuantityInSupply;
                 newItem = false;
@@ -45,6 +47,7 @@ namespace FruktAdminApp
             }
             else
             {
+                fruit = new FruitModel();
                 newItem = true;
             }
         }
@@ -54,7 +57,32 @@ namespace FruktAdminApp
         {
             if (newItem)
             {
-                // check ID then put
+                // check ID then post
+                fruit.Name = fruitName.Text;
+                fruit.QuantityInSupply = fruitqty.Text;
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:8081/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var stringContent = new StringContent(JsonConvert.SerializeObject(fruit), System.Text.Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = client.PostAsync("Fruits/PostFruit", stringContent).Result;
+                using (HttpContent content = response.Content)
+                {
+                    var json = content.ReadAsStringAsync().Result;
+                    fruit = JsonConvert.DeserializeObject<FruitModel>(json);
+                    fruitId.Text = "ID : " + fruit.Id;
+                    newItem = false;
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    responseMsg.Text = "OK";
+
+                }
+                else
+                {
+                    responseMsg.Text = "Failed";
+                }
+
             }
             else
             {
@@ -62,7 +90,7 @@ namespace FruktAdminApp
             }
 
             // API update
-            responseMsg.Text = "response from Api";
+            
         }
 
         public void Back_click(object sender, RoutedEventArgs e)

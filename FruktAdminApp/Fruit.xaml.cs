@@ -27,7 +27,7 @@ namespace FruktAdminApp
         private async void FindItem(object sender, RoutedEventArgs e)
         {
             string baseUrl = "http://localhost:8081";
-            string parameterUrl = "/Fruits/";
+            string parameterUrl = "/Fruits/GetFruit/";
             string itemId = inputName.Text;
             int convertId = 0;
             int.TryParse(itemId, out convertId);
@@ -55,6 +55,12 @@ namespace FruktAdminApp
 
             // new page or something?
         }
-        
+
+        private void AddNew(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FruitFormTemplate), null);
+        }
+
+
     }
 }
