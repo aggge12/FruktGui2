@@ -73,7 +73,7 @@ namespace FruktAdminApp
         {
             string baseUrl = "http://localhost:8081";
             string parameterUrl = "/FruitSuppliers/";
-            string itemId = fruit.Id;
+            string itemId = fruit.Id.ToString();
             int convertId = 0;
             int.TryParse(itemId, out convertId);
             if (convertId == 0)

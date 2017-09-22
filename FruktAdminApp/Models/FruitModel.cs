@@ -20,15 +20,15 @@ namespace FruktAdminApp.Models
 
             public FruitModel(int id, string Name, int qtt)
             {
-                this.Id = id.ToString();
+                this.Id = id;
                 this.Name = Name;
                 this.QuantityInSupply = qtt.ToString();
             }
 
             public event PropertyChangedEventHandler PropertyChanged;
 
-            private string id;
-            public string Id
+            private int id;
+            public int Id
             {
                 get { return id; }
                 set { this.id = value; }

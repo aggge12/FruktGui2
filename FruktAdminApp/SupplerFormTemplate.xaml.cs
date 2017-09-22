@@ -39,7 +39,7 @@ namespace FruktAdminApp
             if (e.Parameter != null)
             {
                 this.Suppl = e.Parameter as SupplierModel;
-                supplierId.Text = "ID : " + Suppl.id;
+                supplierId.Text = Suppl.id.ToString();
                 supplierName.Text = Suppl.Name;
                 newItem = false;
 
@@ -68,7 +68,7 @@ namespace FruktAdminApp
                 {
                     var json = content.ReadAsStringAsync().Result;
                     Suppl = JsonConvert.DeserializeObject<SupplierModel>(json);
-                    supplierId.Text = "ID : " + Suppl.id;
+                    supplierId.Text = Suppl.id.ToString();
                     newItem = false;
                 }
                 if (response.IsSuccessStatusCode)
@@ -84,7 +84,25 @@ namespace FruktAdminApp
             }
             else
             {
-                //update
+                Suppl.Name = supplierName.Text;
+                Suppl.id = int.Parse(supplierId.Text);
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:8081/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var stringContent = new StringContent(JsonConvert.SerializeObject(Suppl), System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PutAsync("Suppliers/PutSupplier" + "/" + Suppl.id, stringContent).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    responseMsg.Text = "OK";
+
+                }
+                else
+                {
+                    responseMsg.Text = "Failed";
+                }
+
+
             }
 
             // API update
