@@ -63,11 +63,11 @@ namespace FruktAdminApp
                 fruit.Name = fruitName.Text;
                 fruit.QuantityInSupply = fruitqty.Text;
                     HttpClient client = new HttpClient();
-                    client.BaseAddress = new Uri("http://localhost:8081/");
+                    client.BaseAddress = new Uri("http://localhost:8081");
                     client.DefaultRequestHeaders.Accept.Clear();
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var stringContent = new StringContent(JsonConvert.SerializeObject(fruit), System.Text.Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = client.PostAsync("Fruits/PostFruit", stringContent).Result;
+                    HttpResponseMessage response = client.PostAsync("/Fruits/PostFruit", stringContent).Result;
                 using (HttpContent content = response.Content)
                 {
                     var json = content.ReadAsStringAsync().Result;
@@ -93,11 +93,11 @@ namespace FruktAdminApp
                 fruit.Id = int.Parse(fruitId.Text);
                 fruit.QuantityInSupply = fruitqty.Text;
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8081/");
+                client.BaseAddress = new Uri("http://localhost:8081");
                 client.DefaultRequestHeaders.Accept.Clear();
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var stringContent = new StringContent(JsonConvert.SerializeObject(fruit), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PutAsync("Fruits/PutFruit" + "/" + fruit.Id, stringContent).Result;
+                HttpResponseMessage response = client.PutAsync("/Fruits/PutFruit" + "/" + fruit.Id, stringContent).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     responseMsg.Text = "OK";

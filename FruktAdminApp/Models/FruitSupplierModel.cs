@@ -25,5 +25,11 @@ namespace FruktAdminApp.Models
             this.Fruit = Fruit;
             this.Supplier = Supplier;
         }
+
+        public FruitSupplierModel(int Fruit, int Supplier)
+        {
+            this.Fruit = Fruit;
+            this.Supplier = Supplier;
+        }
     }
 }

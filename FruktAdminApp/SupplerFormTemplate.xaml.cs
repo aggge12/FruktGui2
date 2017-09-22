@@ -59,11 +59,11 @@ namespace FruktAdminApp
                 // check ID then post
                 Suppl.Name = supplierName.Text;
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8081/");
+                client.BaseAddress = new Uri("http://localhost:8081");
                 client.DefaultRequestHeaders.Accept.Clear();
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var stringContent = new StringContent(JsonConvert.SerializeObject(Suppl), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsync("Suppliers/PostSupplier", stringContent).Result;
+                HttpResponseMessage response = client.PostAsync("/Suppliers/PostSupplier", stringContent).Result;
                 using (HttpContent content = response.Content)
                 {
                     var json = content.ReadAsStringAsync().Result;
@@ -87,11 +87,11 @@ namespace FruktAdminApp
                 Suppl.Name = supplierName.Text;
                 Suppl.id = int.Parse(supplierId.Text);
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8081/");
+                client.BaseAddress = new Uri("http://localhost:8081");
                 client.DefaultRequestHeaders.Accept.Clear();
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var stringContent = new StringContent(JsonConvert.SerializeObject(Suppl), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PutAsync("Suppliers/PutSupplier" + "/" + Suppl.id, stringContent).Result;
+                HttpResponseMessage response = client.PutAsync("/Suppliers/PutSupplier" + "/" + Suppl.id, stringContent).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     responseMsg.Text = "OK";
