@@ -46,7 +46,7 @@ namespace FruktAdminApp
 
         private async void GetSuppliersForFruit() // get the suppliers for the specified Fruit
         {
-            string baseUrl = "http://localhost:8081";
+            string baseUrl = App.ApiBaseUrl;
             string parameterUrl = "/FruitSuppliers/GetFruitSupplierByFruit";
 
             using (HttpClient client = new HttpClient())
@@ -67,7 +67,7 @@ namespace FruktAdminApp
 
         private async void GetSuppliersByName(object sender, RoutedEventArgs e)
         {
-            string baseUrl = "http://localhost:8081";
+            string baseUrl = App.ApiBaseUrl;
             string parameterUrl = "/Suppliers/GetSuppliersByName/";
             string itemName = InputSupplierSearch.Text;
 
@@ -131,7 +131,7 @@ namespace FruktAdminApp
 
             FruitSupplierModel FSModel = new FruitSupplierModel(fruit.Id, item.id);
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:8081");
+            client.BaseAddress = new Uri(App.ApiBaseUrl);
             client.DefaultRequestHeaders.Accept.Clear();
             //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var stringContent = new StringContent(JsonConvert.SerializeObject(FSModel), System.Text.Encoding.UTF8, "application/json");

@@ -18,11 +18,12 @@ namespace FruktAdminApp.Models
 
             }
 
-            public FruitModel(int id, string Name, int qtt)
+            public FruitModel(int id, string Name, int qtt, int Price)
             {
                 this.Id = id;
                 this.Name = Name;
                 this.QuantityInSupply = qtt.ToString();
+                this.Price = Price;
             }
 
             public event PropertyChangedEventHandler PropertyChanged;
@@ -32,6 +33,13 @@ namespace FruktAdminApp.Models
             {
                 get { return id; }
                 set { this.id = value; }
+            }
+
+            private int price;
+            public int Price
+            {
+                get { return price; }
+                set { this.price = value; this.OnPropertyChanged("price"); }
             }
 
             private string name;

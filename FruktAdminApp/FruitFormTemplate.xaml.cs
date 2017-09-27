@@ -42,6 +42,7 @@ namespace FruktAdminApp
                 fruitId.Text = fruit.Id.ToString();
                 fruitName.Text = fruit.Name;
                 fruitqty.Text = fruit.QuantityInSupply;
+                fruitPrice.Text = fruit.Price.ToString();
                 newItem = false;
                 ManageSuppliers_btn.IsEnabled = true;
 
@@ -62,6 +63,15 @@ namespace FruktAdminApp
                 // check ID then post
                 fruit.Name = fruitName.Text;
                 fruit.QuantityInSupply = fruitqty.Text;
+                try
+                {
+                    fruit.Price = int.Parse(fruitPrice.Text);
+                }
+                catch
+                {
+                    fruit.Price = 0;
+                }
+
                     HttpClient client = new HttpClient();
                     client.BaseAddress = new Uri(App.ApiBaseUrl);
                     client.DefaultRequestHeaders.Accept.Clear();
@@ -92,6 +102,14 @@ namespace FruktAdminApp
                 fruit.Name = fruitName.Text;
                 fruit.Id = int.Parse(fruitId.Text);
                 fruit.QuantityInSupply = fruitqty.Text;
+                try
+                {
+                    fruit.Price = int.Parse(fruitPrice.Text);
+                }
+                catch
+                {
+                    fruit.Price = 0;
+                }
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("http://localhost:8081");
                 client.DefaultRequestHeaders.Accept.Clear();
