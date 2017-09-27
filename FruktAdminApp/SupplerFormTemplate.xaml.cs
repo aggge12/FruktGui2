@@ -59,7 +59,7 @@ namespace FruktAdminApp
                 // check ID then post
                 Suppl.Name = supplierName.Text;
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8081");
+                client.BaseAddress = new Uri(App.ApiBaseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var stringContent = new StringContent(JsonConvert.SerializeObject(Suppl), System.Text.Encoding.UTF8, "application/json");

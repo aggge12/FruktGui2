@@ -37,7 +37,7 @@ namespace FruktAdminApp
 
         private async void FindItem(object sender, RoutedEventArgs e)
         {
-            string baseUrl = "http://localhost:8081";
+            string baseUrl = App.ApiBaseUrl;
             string parameterUrl = "/Suppliers/GetSupplier/";
             string itemId = inputName.Text;
             int convertId = 0;

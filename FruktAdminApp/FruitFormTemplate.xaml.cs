@@ -63,7 +63,7 @@ namespace FruktAdminApp
                 fruit.Name = fruitName.Text;
                 fruit.QuantityInSupply = fruitqty.Text;
                     HttpClient client = new HttpClient();
-                    client.BaseAddress = new Uri("http://localhost:8081");
+                    client.BaseAddress = new Uri(App.ApiBaseUrl);
                     client.DefaultRequestHeaders.Accept.Clear();
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var stringContent = new StringContent(JsonConvert.SerializeObject(fruit), System.Text.Encoding.UTF8, "application/json");

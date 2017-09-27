@@ -92,7 +92,7 @@ namespace FruktAdminApp
             if (ListOfAddedSuppliersResult.SelectedItems.Count > 0)
             {
                 SupplierModel item = (SupplierModel)ListOfAddedSuppliersResult.SelectedItems[0];
-                string baseUrl = "http://localhost:8081";
+                string baseUrl = App.ApiBaseUrl;
                 string parameterUrl = "/FruitSuppliers/GetFruitSupplierByFruitAndSupplier/";
 
                 using (HttpClient client = new HttpClient())
