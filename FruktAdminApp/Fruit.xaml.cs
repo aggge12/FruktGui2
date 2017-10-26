@@ -56,7 +56,7 @@ namespace FruktAdminApp
             }
             catch (Exception ex)
             {
-                lblErr.Text = ex.Message();
+                lblErr.Text = ex.Message;
             }
         }
 
