@@ -54,58 +54,64 @@ namespace FruktAdminApp
 
         public void saveChanges(object sender, RoutedEventArgs e)
         {
-            if (newItem)
+            try
             {
-                // check ID then post
-                Suppl.Name = supplierName.Text;
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(App.ApiBaseUrl);
-                client.DefaultRequestHeaders.Accept.Clear();
-                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var stringContent = new StringContent(JsonConvert.SerializeObject(Suppl), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsync("/Suppliers/PostSupplier", stringContent).Result;
-                using (HttpContent content = response.Content)
+                if (newItem)
                 {
-                    var json = content.ReadAsStringAsync().Result;
-                    Suppl = JsonConvert.DeserializeObject<SupplierModel>(json);
-                    supplierId.Text = Suppl.id.ToString();
-                    newItem = false;
-                }
-                if (response.IsSuccessStatusCode)
-                {
-                    responseMsg.Text = "OK";
+                    // check ID then post
+                    Suppl.Name = supplierName.Text;
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri(App.ApiBaseUrl);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var stringContent = new StringContent(JsonConvert.SerializeObject(Suppl), System.Text.Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = client.PostAsync("/Suppliers/PostSupplier", stringContent).Result;
+                    using (HttpContent content = response.Content)
+                    {
+                        var json = content.ReadAsStringAsync().Result;
+                        Suppl = JsonConvert.DeserializeObject<SupplierModel>(json);
+                        supplierId.Text = Suppl.id.ToString();
+                        newItem = false;
+                    }
+                    if (response.IsSuccessStatusCode)
+                    {
+                        responseMsg.Text = "OK";
+
+                    }
+                    else
+                    {
+                        responseMsg.Text = "Failed";
+                    }
 
                 }
                 else
                 {
-                    responseMsg.Text = "Failed";
+                    Suppl.Name = supplierName.Text;
+                    Suppl.id = int.Parse(supplierId.Text);
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:8081");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var stringContent = new StringContent(JsonConvert.SerializeObject(Suppl), System.Text.Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = client.PutAsync("/Suppliers/PutSupplier" + "/" + Suppl.id, stringContent).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        responseMsg.Text = "OK";
+
+                    }
+                    else
+                    {
+                        responseMsg.Text = "Failed";
+                    }
+
+
                 }
 
             }
-            else
+            catch (Exception ex)
             {
-                Suppl.Name = supplierName.Text;
-                Suppl.id = int.Parse(supplierId.Text);
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8081");
-                client.DefaultRequestHeaders.Accept.Clear();
-                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var stringContent = new StringContent(JsonConvert.SerializeObject(Suppl), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PutAsync("/Suppliers/PutSupplier" + "/" + Suppl.id, stringContent).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    responseMsg.Text = "OK";
-
-                }
-                else
-                {
-                    responseMsg.Text = "Failed";
-                }
-
-
+                lblErr.Text = ex.Message;
             }
-
-            // API update
         }
     }
 }

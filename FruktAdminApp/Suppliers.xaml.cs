@@ -33,30 +33,37 @@ namespace FruktAdminApp
 
         private async void FindItem(object sender, RoutedEventArgs e)
         {
-            string baseUrl = App.ApiBaseUrl;
-            string parameterUrl = "/Suppliers/GetSupplier/";
-            string itemId = inputName.Text;
-            int convertId = 0;
-            if (int.TryParse(itemId, out convertId))
+            try
             {
 
-                using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + itemId))
-                using (HttpContent content = response.Content)
+                string baseUrl = App.ApiBaseUrl;
+                string parameterUrl = "/Suppliers/GetSupplier/";
+                string itemId = inputName.Text;
+                int convertId = 0;
+                if (int.TryParse(itemId, out convertId))
                 {
-                    // ... Read the string.
-                    string result = await content.ReadAsStringAsync();
 
-                    // ... Display the result.
-                    if (result != null)
+                    using (HttpClient client = new HttpClient())
+                    using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + itemId))
+                    using (HttpContent content = response.Content)
                     {
-                        SupplierModel suppl = JsonConvert.DeserializeObject<SupplierModel>(result);
-                        var parameters = suppl;
-                        this.Frame.Navigate(typeof(SupplerFormTemplate), parameters);
+                        // ... Read the string.
+                        string result = await content.ReadAsStringAsync();
+
+                        // ... Display the result.
+                        if (result != null)
+                        {
+                            SupplierModel suppl = JsonConvert.DeserializeObject<SupplierModel>(result);
+                            var parameters = suppl;
+                            this.Frame.Navigate(typeof(SupplerFormTemplate), parameters);
+                        }
                     }
                 }
             }
-     
+            catch (Exception ex)
+            {
+                lblErr.Text = ex.Message;
+            }
         }
         private void AddNew(object sender, RoutedEventArgs e)
         {

@@ -32,6 +32,7 @@
         <Button x:Name="button_Copy" Content="Find Fruit By Id" Grid.Column="3"  Grid.Row="5" VerticalAlignment="Stretch" RenderTransformOrigin="1.108,-0.125" HorizontalAlignment="Stretch" Background="#33BDBDBD" BorderBrush="Black" Click="FindItem"/>
         <TextBox x:Name="inputName" Grid.Column="2" Margin="0" Grid.Row="5" TextWrapping="Wrap"/>
         <TextBlock x:Name="textBlock" Grid.Column="2" Margin="0" Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="Fruit Management Page" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"/>
+        <TextBlock x:Name="lblErr" Grid.Column="2" Margin="0" Grid.Row="6" Grid.ColumnSpan="2" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
        
 
 

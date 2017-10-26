@@ -58,76 +58,84 @@ namespace FruktAdminApp
 
         public void saveChanges(object sender, RoutedEventArgs e)
         {
-            if (newItem)
+            try
             {
-                // check ID then post
-                fruit.Name = fruitName.Text;
-                fruit.QuantityInSupply = fruitqty.Text;
-                try
-                {
-                    fruit.Price = int.Parse(fruitPrice.Text);
-                }
-                catch
-                {
-                    fruit.Price = 0;
-                }
 
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(App.ApiBaseUrl);
-                client.DefaultRequestHeaders.Accept.Clear();
-                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var stringContent = new StringContent(JsonConvert.SerializeObject(fruit), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsync("/Fruits/PostFruit", stringContent).Result;
-                using (HttpContent content = response.Content)
+
+                if (newItem)
                 {
-                    var json = content.ReadAsStringAsync().Result;
-                    fruit = JsonConvert.DeserializeObject<FruitModel>(json);
-                    fruitId.Text = fruit.Id.ToString();
-                    newItem = false;
-                    ManageSuppliers_btn.IsEnabled = true;
-                }
-                if (response.IsSuccessStatusCode)
-                {
-                    responseMsg.Text = "OK";
+                    // check ID then post
+                    fruit.Name = fruitName.Text;
+                    fruit.QuantityInSupply = fruitqty.Text;
+                    try
+                    {
+                        fruit.Price = int.Parse(fruitPrice.Text);
+                    }
+                    catch
+                    {
+                        fruit.Price = 0;
+                    }
+
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri(App.ApiBaseUrl);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var stringContent = new StringContent(JsonConvert.SerializeObject(fruit), System.Text.Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = client.PostAsync("/Fruits/PostFruit", stringContent).Result;
+                    using (HttpContent content = response.Content)
+                    {
+                        var json = content.ReadAsStringAsync().Result;
+                        fruit = JsonConvert.DeserializeObject<FruitModel>(json);
+                        fruitId.Text = fruit.Id.ToString();
+                        newItem = false;
+                        ManageSuppliers_btn.IsEnabled = true;
+                    }
+                    if (response.IsSuccessStatusCode)
+                    {
+                        responseMsg.Text = "OK";
+
+                    }
+                    else
+                    {
+                        responseMsg.Text = "Failed";
+                    }
 
                 }
                 else
                 {
-                    responseMsg.Text = "Failed";
+                    fruit.Name = fruitName.Text;
+                    fruit.Id = int.Parse(fruitId.Text);
+                    fruit.QuantityInSupply = fruitqty.Text;
+                    try
+                    {
+                        fruit.Price = int.Parse(fruitPrice.Text);
+                    }
+                    catch
+                    {
+                        fruit.Price = 0;
+                    }
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:8081");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var stringContent = new StringContent(JsonConvert.SerializeObject(fruit), System.Text.Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = client.PutAsync("/Fruits/PutFruit" + "/" + fruit.Id, stringContent).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        responseMsg.Text = "OK";
+
+                    }
+                    else
+                    {
+                        responseMsg.Text = "Failed";
+                    }
                 }
 
             }
-            else
+            catch (Exception ex)
             {
-                fruit.Name = fruitName.Text;
-                fruit.Id = int.Parse(fruitId.Text);
-                fruit.QuantityInSupply = fruitqty.Text;
-                try
-                {
-                    fruit.Price = int.Parse(fruitPrice.Text);
-                }
-                catch
-                {
-                    fruit.Price = 0;
-                }
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8081");
-                client.DefaultRequestHeaders.Accept.Clear();
-                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var stringContent = new StringContent(JsonConvert.SerializeObject(fruit), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PutAsync("/Fruits/PutFruit" + "/" + fruit.Id, stringContent).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    responseMsg.Text = "OK";
-
-                }
-                else
-                {
-                    responseMsg.Text = "Failed";
-                }
+                lblErr.Text = ex.Message;
             }
-
-            // API update
             
         }
 

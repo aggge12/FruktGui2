@@ -46,111 +46,134 @@ namespace FruktAdminApp
 
         private async void GetSuppliersForFruit() // get the suppliers for the specified Fruit
         {
-            string baseUrl = App.ApiBaseUrl;
-            string parameterUrl = "/FruitSuppliers/GetFruitSupplierByFruit";
-
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + "/" + fruit.Id))
-            using (HttpContent content = response.Content)
+            try
             {
-                string result = await content.ReadAsStringAsync();
+                string baseUrl = App.ApiBaseUrl;
+                string parameterUrl = "/FruitSuppliers/GetFruitSupplierByFruit";
 
-                if (result != null)
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + "/" + fruit.Id))
+                using (HttpContent content = response.Content)
                 {
-                    fruitSupplierList = (List<SupplierModel>)JsonConvert.DeserializeObject<IEnumerable<SupplierModel>>(result); 
-                  
-                    ListOfAddedSuppliersResult.ItemsSource = fruitSupplierList;
+                    string result = await content.ReadAsStringAsync();
 
+                    if (result != null)
+                    {
+                        fruitSupplierList = (List<SupplierModel>)JsonConvert.DeserializeObject<IEnumerable<SupplierModel>>(result);
+
+                        ListOfAddedSuppliersResult.ItemsSource = fruitSupplierList;
+
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                lblErr.Text = ex.Message;
             }
         }
 
         private async void GetSuppliersByName(object sender, RoutedEventArgs e)
         {
-            string baseUrl = App.ApiBaseUrl;
-            string parameterUrl = "/Suppliers/GetSuppliersByName/";
-            string itemName = InputSupplierSearch.Text;
-
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + itemName))
-            using (HttpContent content = response.Content)
+            try
             {
-                string result = await content.ReadAsStringAsync();
+                string baseUrl = App.ApiBaseUrl;
+                string parameterUrl = "/Suppliers/GetSuppliersByName/";
+                string itemName = InputSupplierSearch.Text;
 
-                if (result != null)
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + itemName))
+                using (HttpContent content = response.Content)
                 {
-                    SupplierList = new ObservableCollection<SupplierModel>(JsonConvert.DeserializeObject<IEnumerable<SupplierModel>>(result));
-                    CheckDuplicatesInLists();
-                    ListOfSuppliersResult.ItemsSource = SupplierList;
-                    
+                    string result = await content.ReadAsStringAsync();
+
+                    if (result != null)
+                    {
+                        SupplierList = new ObservableCollection<SupplierModel>(JsonConvert.DeserializeObject<IEnumerable<SupplierModel>>(result));
+                        CheckDuplicatesInLists();
+                        ListOfSuppliersResult.ItemsSource = SupplierList;
+
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                lblErr.Text = ex.Message;
             }
         }
 
         private async void RemoveSupplier(object sender, RoutedEventArgs e)
         {
-            if (ListOfAddedSuppliersResult.SelectedItems.Count > 0)
+            try
             {
-                SupplierModel item = (SupplierModel)ListOfAddedSuppliersResult.SelectedItems[0];
-                string baseUrl = App.ApiBaseUrl;
-                string parameterUrl = "/FruitSuppliers/GetFruitSupplierByFruitAndSupplier/";
-
-                using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + fruit.Id + "/" + item.id))
-                using (HttpContent content = response.Content)
+                if (ListOfAddedSuppliersResult.SelectedItems.Count > 0)
                 {
-                    string result = await content.ReadAsStringAsync();
+                    SupplierModel item = (SupplierModel)ListOfAddedSuppliersResult.SelectedItems[0];
+                    string baseUrl = App.ApiBaseUrl;
+                    string parameterUrl = "/FruitSuppliers/GetFruitSupplierByFruitAndSupplier/";
 
-                    if (response.IsSuccessStatusCode)
+                    using (HttpClient client = new HttpClient())
+                    using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + fruit.Id + "/" + item.id))
+                    using (HttpContent content = response.Content)
                     {
+                        string result = await content.ReadAsStringAsync();
 
-                        FruitSupplierModel fruitSupplierModel = JsonConvert.DeserializeObject<FruitSupplierModel>(result);
-
-                        parameterUrl = "/FruitSuppliers/DeleteFruitSupplier/";
-
-     
-                        using (HttpResponseMessage deleteResponse = await client.DeleteAsync(baseUrl + parameterUrl + fruitSupplierModel.id))
+                        if (response.IsSuccessStatusCode)
                         {
 
-                            if (deleteResponse.IsSuccessStatusCode)
+                            FruitSupplierModel fruitSupplierModel = JsonConvert.DeserializeObject<FruitSupplierModel>(result);
+
+                            parameterUrl = "/FruitSuppliers/DeleteFruitSupplier/";
+
+
+                            using (HttpResponseMessage deleteResponse = await client.DeleteAsync(baseUrl + parameterUrl + fruitSupplierModel.id))
                             {
-                                GetSuppliersForFruit();
-                                CheckDuplicatesInLists();
-                                ListOfSuppliersResult.ItemsSource = SupplierList;
+
+                                if (deleteResponse.IsSuccessStatusCode)
+                                {
+                                    GetSuppliersForFruit();
+                                    CheckDuplicatesInLists();
+                                    ListOfSuppliersResult.ItemsSource = SupplierList;
+                                }
                             }
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                lblErr.Text = ex.Message;
+            }
         }
 
         public void AddSupplier(object sender, RoutedEventArgs e)
         {
-            SupplierModel item = (SupplierModel)ListOfSuppliersResult.SelectedItems[0];
-
-
-            FruitSupplierModel FSModel = new FruitSupplierModel(fruit.Id, item.id);
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(App.ApiBaseUrl);
-            client.DefaultRequestHeaders.Accept.Clear();
-            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var stringContent = new StringContent(JsonConvert.SerializeObject(FSModel), System.Text.Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync("/FruitSuppliers/PostFruitSupplier", stringContent).Result;
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                GetSuppliersForFruit();
-                CheckDuplicatesInLists();
-                ListOfSuppliersResult.ItemsSource = SupplierList;
+                SupplierModel item = (SupplierModel)ListOfSuppliersResult.SelectedItems[0];
+
+
+                FruitSupplierModel FSModel = new FruitSupplierModel(fruit.Id, item.id);
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(App.ApiBaseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var stringContent = new StringContent(JsonConvert.SerializeObject(FSModel), System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PostAsync("/FruitSuppliers/PostFruitSupplier", stringContent).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    GetSuppliersForFruit();
+                    CheckDuplicatesInLists();
+                    ListOfSuppliersResult.ItemsSource = SupplierList;
+                }
+                else
+                {
+                }
             }
-            else
+            catch (Exception ex)
             {
+                lblErr.Text = ex.Message;
             }
-        }
-        public void saveChanges(object sender, RoutedEventArgs e)
-        {
-            // API update
-            responseMsg.Text = "response from Api";
         }
 
 

@@ -26,34 +26,38 @@ namespace FruktAdminApp
         }
         private async void FindItem(object sender, RoutedEventArgs e)
         {
-            string baseUrl = App.ApiBaseUrl;
-            string parameterUrl = "/Fruits/GetFruit/";
-            string itemId = inputName.Text;
-            int convertId = 0;
-            int.TryParse(itemId, out convertId);
-            if (convertId == 0)
+            try
             {
-                throw new Exception("can not be alphabetical or 0");
-            }
-
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + itemId))
-            using (HttpContent content = response.Content)
-            {
-                // ... Read the string.
-                string result = await content.ReadAsStringAsync();
-
-                // ... Display the result.
-                if (result != null )
+                string baseUrl = App.ApiBaseUrl;
+                string parameterUrl = "/Fruits/GetFruit/";
+                string itemId = inputName.Text;
+                int convertId = 0;
+                int.TryParse(itemId, out convertId);
+                if (convertId == 0)
                 {
-                    FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
-                    var parameters = fruit;
-                    this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
+                    throw new Exception("can not be alphabetical or 0");
+                }
+
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + itemId))
+                using (HttpContent content = response.Content)
+                {
+                    // ... Read the string.
+                    string result = await content.ReadAsStringAsync();
+
+                    // ... Display the result.
+                    if (result != null)
+                    {
+                        FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
+                        var parameters = fruit;
+                        this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
+                    }
                 }
             }
-            // something something api request
-
-            // new page or something?
+            catch (Exception ex)
+            {
+                lblErr.Text = ex.Message();
+            }
         }
 
         private void AddNew(object sender, RoutedEventArgs e)

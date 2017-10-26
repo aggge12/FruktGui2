@@ -16,6 +16,7 @@
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -55,6 +56,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
+        <TextBlock x:Name="lblErr" Grid.Column="1" Margin="0" Grid.Row="7" Grid.ColumnSpan="2" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
     </Grid>
 </Page>
