@@ -107,10 +107,5 @@ namespace FruktAdminApp
 
             // API update
         }
-
-        public void Back_click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(Suppliers), null);
-        }
     }
 }

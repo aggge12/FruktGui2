@@ -153,10 +153,6 @@ namespace FruktAdminApp
             responseMsg.Text = "response from Api";
         }
 
-        public void Back_click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(Fruit), null);
-        }
 
         private void LoadSuppliers(object sender, RoutedEventArgs e)
         {

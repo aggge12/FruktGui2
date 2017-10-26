@@ -25,16 +25,37 @@ namespace FruktAdminApp
         public MainPage()
         {
             this.InitializeComponent();
+            Frame rootFrame = Window.Current.Content as Frame;
         }
 
         private void Suppliers_btn_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Suppliers), null);
+            this.MainFrame.Navigate(typeof(Suppliers));
         }
 
         private void Fruit_btn_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Fruit), null);
+            this.MainFrame.Navigate(typeof(Fruit));
+        }
+
+        private void SetApiUrl(object sender, RoutedEventArgs e)
+        {
+            if (ApiUrl.Text != "" && ApiUrl.Text != null)
+            {
+                try
+                {
+                    Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+                    localSettings.Values["ApiBaseUri"] = ApiUrl.Text;
+                    App.ApiBaseUrl = ApiUrl.Text;
+                    SucessLbl.Text = "Saved";
+                }
+                catch
+                {
+                    SucessLbl.Text = "Failed to save";
+                }
+            }
+
         }
     }
 }

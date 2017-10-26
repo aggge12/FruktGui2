@@ -72,12 +72,12 @@ namespace FruktAdminApp
                     fruit.Price = 0;
                 }
 
-                    HttpClient client = new HttpClient();
-                    client.BaseAddress = new Uri(App.ApiBaseUrl);
-                    client.DefaultRequestHeaders.Accept.Clear();
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(App.ApiBaseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var stringContent = new StringContent(JsonConvert.SerializeObject(fruit), System.Text.Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = client.PostAsync("/Fruits/PostFruit", stringContent).Result;
+                HttpResponseMessage response = client.PostAsync("/Fruits/PostFruit", stringContent).Result;
                 using (HttpContent content = response.Content)
                 {
                     var json = content.ReadAsStringAsync().Result;
@@ -131,10 +131,6 @@ namespace FruktAdminApp
             
         }
 
-        public void Back_click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(Fruit), null);
-        }
         public void ManageSuppliers(object sender, RoutedEventArgs e)
         {
             var parameters = fruit;

@@ -31,9 +31,17 @@ namespace FruktAdminApp
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            ApiBaseUrl = "http://localhost:8081";
-        }
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            if (localSettings.Values["ApiBaseUri"] != null && localSettings.Values["ApiBaseUri"].ToString() != null && localSettings.Values["ApiBaseUri"].ToString() != "")
+            {
+                ApiBaseUrl = localSettings.Values["ApiBaseUri"].ToString();
+            }
+            else
+            {
+                ApiBaseUrl = "http://localhost:8081";
+            }
 
+        }
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.

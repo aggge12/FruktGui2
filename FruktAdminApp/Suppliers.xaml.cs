@@ -30,10 +30,6 @@ namespace FruktAdminApp
             this.InitializeComponent();
         }
 
-        private void Back_click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(MainPage), null);
-        }
 
         private async void FindItem(object sender, RoutedEventArgs e)
         {
