@@ -51,11 +51,15 @@ namespace FruktAdminApp
                         string result = await content.ReadAsStringAsync();
 
                         // ... Display the result.
-                        if (result != null)
+                        if (result != null && response.IsSuccessStatusCode)
                         {
                             SupplierModel suppl = JsonConvert.DeserializeObject<SupplierModel>(result);
                             var parameters = suppl;
                             this.Frame.Navigate(typeof(SupplerFormTemplate), parameters);
+                        }
+                        else
+                        {
+                            lblErr.Text = "Could not find supplier";
                         }
                     }
                 }
@@ -65,6 +69,9 @@ namespace FruktAdminApp
                 lblErr.Text = ex.Message;
             }
         }
+
+
+
         private void AddNew(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(SupplerFormTemplate), null);

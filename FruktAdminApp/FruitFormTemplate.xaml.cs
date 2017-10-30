@@ -89,6 +89,7 @@ namespace FruktAdminApp
                         fruitId.Text = fruit.Id.ToString();
                         newItem = false;
                         ManageSuppliers_btn.IsEnabled = true;
+                        deleteButton.IsEnabled = true;
                     }
                     if (response.IsSuccessStatusCode)
                     {
@@ -138,7 +139,37 @@ namespace FruktAdminApp
             }
             
         }
+        public void deleteItem(object sender, RoutedEventArgs e)
+        {
+            if (fruit != null && newItem == false)
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(App.ApiBaseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                HttpResponseMessage response = client.DeleteAsync("/Fruits/DeleteFruit/" +fruit.Id).Result;
+                using (HttpContent content = response.Content)
+                {
+                }
+                if (response.IsSuccessStatusCode) // clear all fields since item is removed
+                {
+                    newItem = true;
+                    ManageSuppliers_btn.IsEnabled = false;
+                    deleteButton.IsEnabled = false;
+                    responseMsg.Text = "OK";
+                    fruitName.Text = "";
+                    fruitqty.Text = "";
+                    fruitPrice.Text = "";
+                    fruitId.Text = "";
+                    fruit = new FruitModel();
 
+                }
+                else
+                {
+                    responseMsg.Text = "Removal failed";
+                }
+            }
+
+        }
         public void ManageSuppliers(object sender, RoutedEventArgs e)
         {
             var parameters = fruit;

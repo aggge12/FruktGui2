@@ -46,11 +46,15 @@ namespace FruktAdminApp
                     string result = await content.ReadAsStringAsync();
 
                     // ... Display the result.
-                    if (result != null)
+                    if (result != null && response.IsSuccessStatusCode)
                     {
                         FruitModel fruit = JsonConvert.DeserializeObject<FruitModel>(result);
                         var parameters = fruit;
                         this.Frame.Navigate(typeof(FruitFormTemplate), parameters);
+                    }
+                    else
+                    {
+                        lblErr.Text = "Could not find Fruit";
                     }
                 }
             }
