@@ -72,7 +72,7 @@ namespace FruktAdminApp
             }
         }
 
-        private async void GetSuppliersByName(object sender, RoutedEventArgs e)
+        private async void GetSuppliersByName(object sender, RoutedEventArgs e) // get the suppliers by name
         {
             try
             {
@@ -101,7 +101,7 @@ namespace FruktAdminApp
             }
         }
 
-        private async void RemoveSupplier(object sender, RoutedEventArgs e)
+        private async void RemoveSupplier(object sender, RoutedEventArgs e) // removes a suppler - fruit relationship
         {
             try
             {
@@ -112,7 +112,7 @@ namespace FruktAdminApp
                     string parameterUrl = "/FruitSuppliers/GetFruitSupplierByFruitAndSupplier/";
 
                     using (HttpClient client = new HttpClient())
-                    using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + fruit.Id + "/" + item.id))
+                    using (HttpResponseMessage response = await client.GetAsync(baseUrl + parameterUrl + fruit.Id + "/" + item.id)) // gets the relationship by providing fruit and supplier id's to the api
                     using (HttpContent content = response.Content)
                     {
                         string result = await content.ReadAsStringAsync();
@@ -125,7 +125,7 @@ namespace FruktAdminApp
                             parameterUrl = "/FruitSuppliers/DeleteFruitSupplier/";
 
 
-                            using (HttpResponseMessage deleteResponse = await client.DeleteAsync(baseUrl + parameterUrl + fruitSupplierModel.id))
+                            using (HttpResponseMessage deleteResponse = await client.DeleteAsync(baseUrl + parameterUrl + fruitSupplierModel.id)) // removes the relationship
                             {
 
                                 if (deleteResponse.IsSuccessStatusCode)
@@ -145,7 +145,7 @@ namespace FruktAdminApp
             }
         }
 
-        public void AddSupplier(object sender, RoutedEventArgs e)
+        public void AddSupplier(object sender, RoutedEventArgs e) // adds a supplier for a fruit
         {
             try
             {
@@ -177,13 +177,13 @@ namespace FruktAdminApp
         }
 
 
-        private void LoadSuppliers(object sender, RoutedEventArgs e)
+        private void LoadSuppliers(object sender, RoutedEventArgs e) // fills list with suppliers 
         {
             var listView = (ListView)sender;
             listView.ItemsSource = SupplierList;
         }
 
-        private void CheckDuplicatesInLists()
+        private void CheckDuplicatesInLists() // we dont want a supplier for a search result where the fruit is already provided by that supplier
         {
             if (SupplierList != null)
             {
